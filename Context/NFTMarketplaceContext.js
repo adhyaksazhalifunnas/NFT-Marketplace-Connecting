@@ -6,15 +6,13 @@ import axios from "axios";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 
 // const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
-const dotenv = require("dotenv");
-dotenv.config();
-const projectId = process.env.PROJECT_ID;
-const projectSecretKey = process.env.PROJECT_SECRET_KEY;
+const projectId = "insertprojectid";
+const projectSecretKey = "insertsecretkey";
 const auth = `Basic ${Buffer.from(`${projectId}:${projectSecretKey}`).toString(
     "base64"
 )}`;
 
-const subdomain = process.env.SUBDOMAIN;
+const subdomain = "naname-nft-marketplace.infura-ipfs.io";
 
 const client = ipfsHttpClient({
     host: "infura-ipfs.io",
@@ -186,6 +184,7 @@ export const NFTMarketplaceProvider = ({ children }) => {
 
             await transaction.wait();
             console.log(transaction);
+            router.push("/searchPage");
         } catch (error) {
             setError("Error while creating sale");
             setOpenError(true);
