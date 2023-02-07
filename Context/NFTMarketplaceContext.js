@@ -12,7 +12,7 @@ const auth = `Basic ${Buffer.from(`${projectId}:${projectSecretKey}`).toString(
     "base64"
 )}`;
 
-const subdomain = "naname-nft-marketplace.infura-ipfs.io";
+const subdomain = "https://naname-nft-marketplace.infura-ipfs.io";
 
 const client = ipfsHttpClient({
     host: "infura-ipfs.io",
@@ -60,12 +60,12 @@ const fetchTransferFundsContract = (signerOrProvider) =>
 
 const connectToTransferFunds = async () => {
     try {
-        // const web3Modal = new Wenb3Modal();
-        // const connection = await web3Modal.connect();
-        // const provider = new ethers.providers.Web3Provider(connection);
-        const provider = new ethers.providers.JsonRpcProvider(
-            "https://goerli.infura.io/v3/22e93319c7504d95a136f7c2c31714b4"
-        );
+        const web3Modal = new Web3Modal();
+        const connection = await web3Modal.connect();
+        const provider = new ethers.providers.Web3Provider(connection);
+        // const provider = new ethers.providers.JsonRpcProvider(
+        //     "https://goerli.infura.io/v3/22e93319c7504d95a136f7c2c31714b4"
+        // );
         const signer = provider.getSigner();
         const contract = fetchTransferFundsContract(signer);
         return contract;
@@ -157,8 +157,9 @@ export const NFTMarketplaceProvider = ({ children }) => {
         const data = JSON.stringify({ name, description, image });
         try {
             const added = await client.add(data);
-            const url = `https://infura-ipfs.io/ipfs/${added.path}`;
+            const url = `${subdomain}/ipfs/${added.path}`;
             await createSale(url, price);
+            console.log("upload success")
             router.push("/searchPage");
         } catch (error) {
             setError("Error while creating NFT");

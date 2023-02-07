@@ -26,6 +26,7 @@ const searchPage = () => {
                     setNfts(items.reverse());
                     setNftsCopy(items);
                     console.log(nfts);
+                    console.log("test");
                 });
             }
         } catch (error) {
@@ -51,16 +52,17 @@ const searchPage = () => {
         }
     };
 
-    const collectionArray = [
-        images.nft_image_1,
-        images.nft_image_2,
-        images.nft_image_3,
-        images.nft_image_1,
-        images.nft_image_2,
-        images.nft_image_3,
-        images.nft_image_1,
-        images.nft_image_2,
-    ];
+    // const collectionArray = [
+    //     images.nft_image_1,
+    //     images.nft_image_2,
+    //     images.nft_image_3,
+    //     images.nft_image_1,
+    //     images.nft_image_2,
+    //     images.nft_image_3,
+    //     images.nft_image_1,
+    //     images.nft_image_2,
+    // ];
+
     return (
         <div className={Style.searchPage}>
             <Banner bannerImage={images.creatorbackground2} />
@@ -69,8 +71,7 @@ const searchPage = () => {
                 onClearSearch={onClearSearch}
             />
             <Filter />
-            {/* {nfts.length == 0 ? <Loader /> : <NFTCardTwo NFTData={nfts} />} */}
-            <NFTCardTwo NFTData={collectionArray}/>
+            <NFTCardTwo NFTData={nfts} />
             <Slider />
             {/* <Brand /> */}
         </div>
