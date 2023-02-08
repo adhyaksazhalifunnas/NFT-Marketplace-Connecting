@@ -26,7 +26,7 @@ import images from "../../img";
 import { Button } from "../../components/componentsindex.js";
 import { NFTTabs } from "../NFTDetailsIndex";
 
-const NFTDescription = () => {
+const NFTDescription = ({ nft }) => {
     const [social, setSocial] = useState(false);
     const [NFTMenu, setNFTMenu] = useState(false);
     const [history, setHistory] = useState(true);
@@ -162,7 +162,7 @@ const NFTDescription = () => {
 
                 <div className={Style.NFTDescription_box_profile}>
                     <h1>
-                        Hamakaze #N/A
+                        {nft.name} #{nft.tokenId}
                     </h1>
                     <div className={Style.NFTDescription_box_profile_box}>
                         <div className={Style.NFTDescription_box_profile_box_left}>
@@ -252,7 +252,7 @@ const NFTDescription = () => {
                             >
                                 <small>Current Bid</small>
                                 <p>
-                                    N/A ETH <span>( ≈ $N/A)</span>
+                                    {nft.price} ETH <span>( ≈ $N/A)</span>
                                 </p>
                             </div>
 
