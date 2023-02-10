@@ -25,8 +25,8 @@ const searchPage = () => {
                 fetchNFTs().then((items) => {
                     setNfts(items.reverse());
                     setNftsCopy(items);
-                    console.log(nfts);
-                    console.log("test");
+                    // console.log(nfts);
+                    // console.log("test");
                 });
             }
         } catch (error) {

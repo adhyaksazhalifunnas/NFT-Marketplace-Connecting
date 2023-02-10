@@ -6,8 +6,8 @@ import axios from "axios";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 
 // const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
-const projectId = "insertprojectid";
-const projectSecretKey = "insertsecretkey";
+const projectId = "insertprojectId";
+const projectSecretKey = "insertprojectSecretKey";
 const auth = `Basic ${Buffer.from(`${projectId}:${projectSecretKey}`).toString(
     "base64"
 )}`;
@@ -297,7 +297,7 @@ export const NFTMarketplaceProvider = ({ children }) => {
             });
 
             await transaction.wait();
-            // router.push("/author");
+            router.push("/author");
         } catch (error) {
             setError("Error While buying NFT");
             setOpenError(true);

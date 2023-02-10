@@ -134,9 +134,6 @@ const NavBar = () => {
                         {currentAccount == "" ? (
                             <Button btnName="Connect" handleClick={() => connectWallet()} />
                         ) : (
-                            // <Link href={{ pathname: "/" }}>
-                            //     <Button btnName="Create" />
-                            // </Link>
                             <Button
                                 btnName="Create"
                                 handleClick={() => router.push("/uploadNFT")}
@@ -156,8 +153,8 @@ const NavBar = () => {
                                 className={Style.navbar_container_right_profile}
                             />
 
-                            {profile && <Profile />}
-                            {/* CHANGE TO {profile && <Profile currentAccount={currentAccount} />} */}
+                            {/* {profile && <Profile />} */}
+                            {profile && <Profile currentAccount={currentAccount} />}
                         </div>
                     </div>
 

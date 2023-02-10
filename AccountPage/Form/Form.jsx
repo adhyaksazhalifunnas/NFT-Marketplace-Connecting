@@ -95,7 +95,7 @@ const Form = () => {
                             </div>
                             <input
                                 type="text"
-                                placeholder="0xcd47839436E853547353D3a87b33917420CEe438"
+                                placeholder="0xcd00000000000000000000000000000000000000"
                             />
                             <div className={Style.Form_box_input_box_icon}>
                                 <MdOutlineContentCopy />
