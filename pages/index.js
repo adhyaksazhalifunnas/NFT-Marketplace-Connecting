@@ -19,7 +19,8 @@ import {
     Video,
     Loader,
 } from "../components/componentsindex";
-import { MdNoTransfer } from 'react-icons/md';
+
+import { getTopCreators } from "../TopCreators/TopCreators";
 
 //IMPORTING CONTRCT DATA
 import { NFTMarketplaceContext } from "../Context/NFTMarketplaceContext";
@@ -32,6 +33,25 @@ const Home = () => {
         checkIfWalletConnected();
     }, []);
 
+    const { fetchNFTs } = useContext(NFTMarketplaceContext);
+    const [nfts, setNfts] = useState([]);
+    const [nftsCopy, setNftsCopy] = useState([]);
+
+    useEffect(() => {
+        if (currentAccount) {
+            fetchNFTs().then((items) => {
+                setNfts(items.reverse());
+                setNftsCopy(items);
+                console.log(nfts);
+            });
+        }
+    }, []);
+
+    //CREATOR LIST
+
+    const creators = getTopCreators(nfts);
+    // console.log(creators);
+
     return (
         <div className={Style.homePage}>
             <HeroSection />
@@ -42,7 +62,11 @@ const Home = () => {
                 paragraph="Discover the most outstanding NFTs in all topics of life."
             />
             <AudioLive />
-            <FollowerTab />
+            {creators.length == 0 ? (
+                <Loader />
+            ) : (
+                <FollowerTab TopCreator={creators} />
+            )}
             <Slider />
             <Collection />
             <Title
@@ -50,7 +74,7 @@ const Home = () => {
                 paragraph="Discover the most outstanding NFTs in all topics of life."
             />
             <Filter />
-            <NFTCard />
+            {nfts.length == 0 ? <Loader /> : <NFTCard NFTData={nfts} />}
             <Title
                 heading="Browse by category"
                 paragraph="Explore the NFTs in the most featured categories."

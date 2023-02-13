@@ -52,6 +52,8 @@ import founder1 from "./founder1.png"
 import founder2 from "./founder2.png"
 import founder3 from "./founder3.png"
 import founder4 from "./founder4.png"
+import loader from "./loadergif.gif"
+import errorgif from "./error.gif"
 
 export default {
   collection,
@@ -76,6 +78,7 @@ export default {
   creatorbackground9,
   creatorbackground10,
   creatorbackground11,
+  errorgif,
   founder1,
   founder2,
   founder3,
@@ -99,6 +102,7 @@ export default {
   service2,
   service3,
   service4,
+  loader,
   logo,
   logoLight,
   facebook,
