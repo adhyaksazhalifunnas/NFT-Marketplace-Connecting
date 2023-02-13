@@ -12,7 +12,7 @@ import { CgMenuLeft, CgMenuRight } from "react-icons/cg";
 //internal import
 import Style from "./NavBar.module.css";
 import { Discover, HelpCenter, Notification, Profile, SideBar } from './index';
-import { Button } from '../componentsindex';
+import { Button, Error } from '../componentsindex';
 import images from "../../img";
 
 //IMPORT FROM SMART CONTRACT
@@ -152,8 +152,6 @@ const NavBar = () => {
                                 onClick={() => openProfile()}
                                 className={Style.navbar_container_right_profile}
                             />
-
-                            {/* {profile && <Profile />} */}
                             {profile && <Profile currentAccount={currentAccount} />}
                         </div>
                     </div>
@@ -179,7 +177,7 @@ const NavBar = () => {
                 </div>
             )}
 
-            {/* {openError && <Error />} */}
+            {openError && <Error />}
         </div>
     );
 };
