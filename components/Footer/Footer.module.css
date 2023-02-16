@@ -13,7 +13,7 @@
     width: 80%;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1.3fr repeat(2, 1fr) 2fr;
+    grid-template-columns: repeat(4, 1fr);
     align-items: flex-start;
     justify-content: space-between;
     gap: 3rem;
@@ -75,7 +75,7 @@
 }
 
 /* //MEDIA QUERY */
-@media screen and (max-width: 45em) {
+@media screen and (max-width: 55em) {
     .footer_box {
         width: 90%;
         grid-template-columns: 1fr 2fr;

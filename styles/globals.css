@@ -1,3 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* ********************************* */
+
+
+body,
+html {
+  padding: 0;
+  margin: 0;
+  font-family: Poppins, sans-serif;
+  font-size: 14px;
+  background-color: #232325;
+  color: #ffdf2b;
+}
+
+.ButtonQHarr {
+
+  cursor: pointer;
+  transition: all .2s ease-in;
+  box-shadow: 1px 1px 2px #ffdf2b, -1px -1px 2px #ffdf2b;
+}
+
+input {
+  color: #ffdf2b;
+}
+
+.DiscoverItem {
+  padding: 0.5rem 1rem;
+  transition: all .3s ease-in;
+
+}
+
+.transitionAll {
+  transition: all .3s ease-in;
+
+}
+
+.transitionAll:hover {
+  box-shadow: 1px 1px 2px #ffdf2b, -1px -1px 2px #ffdf2b;
+
+}
+
+.boxShadow {
+  box-shadow: 1px 1px 2px #ffdf2b, -1px -1px 2px #ffdf2b;
+}
+
+.bigNFTSliderIcon {
+  cursor: pointer;
+  transition: all .3s ease-in;
+}
+
+
+.AudioCardboxtime {
+
+  padding: 0.48rem 4.5rem;
+  margin-right: -1.4rem;
+  transform: skewX(35deg);
+  border-bottom-left-radius: 1rem;
+}
+
+.boxtime_remaing {
+  transform: skewX(-35deg);
+  text-align: center;
+}
+
+.boxtime_remaing h5 {
+  font-size: 1.5rem;
+
+}
+
+.z900 {
+  z-index: 99999999;
+  transition: all .3s ease-in;
+
+
+}
+
+.z900:hover,
+.z900:active {
+  border: 1px solid #ffdf2b;
+}
+
+.text1 {
+  line-height: 1;
+
+}
+
+.filterButton {
+
+  transition: all .3s ease-in;
+  font-size: 1.3rem;
+  cursor: pointer;
+
+
+}
+
+.filterButton:hover {
+  border: 1px solid #ffdf2b;
+  box-shadow: 1px 1px 2px #ffdf2b, -1px -1px 2px #ffdf2b;
+
+
+}
+
+.menu-item {
+  font-family: Fa-iran-sans-web-light, sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: -1px;
+  color: #444;
+
+}
+
+
+/* *************Home */
+.hero-text {
+
+  line-height: 52px;
+
+}
+
+.AuthorProfilesocial {
+  background-color: #ffdf2b;
+  color: #232325;
+  border-radius: 50%;
+
+  padding: 0.5rem;
+  border: 1px solid #ffdf2b;
+  transition: all .3s ease-in;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.AuthorProfilesocial:hover {
+  color: #ffdf2b;
+  background-color: #232325;
+  box-shadow: 1px 1px 2px #ffdf2b, -1px -1px 2px #ffdf2b;
+
+
+}
+
+/* ******************************* */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 /* //THEME 1 */
@@ -21,7 +168,7 @@
 
 
 /* //THEME 11 */
-/* :root {
+/* :root{
   --icons-color: #fff;
   --icons-light-color: #fff57;
   --icons-bg-color: #fff;
@@ -31,15 +178,15 @@
   --main-bg-color: #0E131F;
 
   --box-shadow: 1px 1px 2px #8f2c2c,
-    -1px -1px 2px #c13c3c;
+  -1px -1px 2px #c13c3c;
 
-  --box-shadow-2: 1px 1px 2px #8f2c2c,
-    -1px -1px 2px #c13c3c;
+  --box-shadow-2:1px 1px 2px #8f2c2c,
+  -1px -1px 2px #c13c3c;
 } */
 
 
 /* //THEME 2 */
-/* :root {
+/* :root{
   --icons-color: #FFDF2B;
   --icons-light-color: #ffdf2b57;
   --icons-bg-color: #FFDF2B;
@@ -50,10 +197,10 @@
   --overlay: #2323255e;
 
   --box-shadow: 1px 1px 2px #FFDF2B,
-    -1px -1px 2px #FFDF2B;
+  -1px -1px 2px #FFDF2B;
 
-  --box-shadow-2: 1px 1px 2px #FFDF2B,
-    -1px -1px 2px #FFDF2B;
+  --box-shadow-2:1px 1px 2px #FFDF2B,
+  -1px -1px 2px #FFDF2B;
 
 } */
 
@@ -169,7 +316,7 @@
 
 
 /* //THEME 9 */
-:root{
+:root {
   --icons-color: #5DDEE2;
   --icons-light-color: #5DDEE257;
   --icons-bg-color: #5DDEE2;
@@ -179,10 +326,10 @@
   --main-bg-color: #1B181E;
 
   --box-shadow: 1px 1px 2px #5DDEE2,
-  -1px -1px 2px #5DDEE2;
+    -1px -1px 2px #5DDEE2;
 
-  --box-shadow-2:1px 1px 2px #5DDEE2,
-  -1px -1px 2px #5DDEE2;
+  --box-shadow-2: 1px 1px 2px #5DDEE2,
+    -1px -1px 2px #5DDEE2;
 
 }
 
@@ -236,9 +383,9 @@ input {
   color: var(--icons-color);
 }
 
-input::placeholder {
+/* input::placeholder{
   color: var(--icons-color);
-}
+} */
 
 textarea {
   color: var(--icons-color);
