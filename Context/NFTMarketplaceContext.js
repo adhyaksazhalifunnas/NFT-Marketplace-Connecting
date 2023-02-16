@@ -6,6 +6,8 @@ import axios from "axios";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 
 // const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
+// const projectId = process.env.REACT_APP_PROJECT_ID;
+// const projectSecretKey = process.env.REACT_APP_PROJECT_SECRET_KEY;
 const projectId = "insertprojectId";
 const projectSecretKey = "insertprojectSecretKey";
 const auth = `Basic ${Buffer.from(`${projectId}:${projectSecretKey}`).toString(

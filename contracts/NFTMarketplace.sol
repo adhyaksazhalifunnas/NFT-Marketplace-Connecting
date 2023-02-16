@@ -4,10 +4,11 @@ pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/common/ERC2981.sol";
 
 import "hardhat/console.sol";
 
-contract NFTMarketplace is ERC721URIStorage {
+contract NFTMarketplace is ERC721URIStorage, ERC2981 {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
     Counters.Counter private _itemsSold;
@@ -43,7 +44,14 @@ contract NFTMarketplace is ERC721URIStorage {
 
     constructor() ERC721("Naname NFT", "NNM") {
         owner = payable(msg.sender);
+        _setDefaultRoyalty(msg.sender, 100);
     }
+
+    function supportsInterface(bytes4 interfaceId)
+        public view virtual override(ERC721, ERC2981)
+        returns (bool) {
+            return super.supportsInterface(interfaceId);
+        }
 
     /* Updates the listing price of the contract */
     function updateListingPrice(uint256 _listingPrice)
