@@ -8,11 +8,9 @@ import { create as ipfsHttpClient } from "ipfs-http-client";
 // const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 // const projectId = process.env.REACT_APP_PROJECT_ID;
 // const projectSecretKey = process.env.REACT_APP_PROJECT_SECRET_KEY;
-const projectId = "insertprojectId";
-const projectSecretKey = "insertprojectSecretKey";
-const auth = `Basic ${Buffer.from(`${projectId}:${projectSecretKey}`).toString(
-    "base64"
-)}`;
+const projectId = "insertprojectid";
+const projectSecretKey = "insertprojectsecretkey";
+const auth = 'Basic ' + Buffer.from( projectId + ":" + projectSecretKey ).toString('base64');
 
 const subdomain = "https://naname-nft-marketplace.infura-ipfs.io";
 
@@ -152,15 +150,15 @@ export const NFTMarketplaceProvider = ({ children }) => {
     };
 
     //---CREATENFT FUNCTION
-    const createNFT = async (name, price, image, description, router) => {
-        if (!name || !description || !price || !image) {
+    const createNFT = async (name, price, image, description, royalties, router) => {
+        if (!name || !description || !price || !image || !royalties) {
             return setError("Data Is Missing"), setOpenError(true);
         }
-        const data = JSON.stringify({ name, description, image });
+        const data = JSON.stringify({ name, description, image, royalties });
         try {
             const added = await client.add(data);
             const url = `${subdomain}/ipfs/${added.path}`;
-            await createSale(url, price);
+            await createSale(url, price, royalties);
             console.log("upload success")
             router.push("/searchPage");
         } catch (error) {
@@ -171,14 +169,15 @@ export const NFTMarketplaceProvider = ({ children }) => {
 
 
     //--- createSale FUNCTION
-    const createSale = async (url, formInputPrice, isReselling, id) => {
+    const createSale = async (url, formInputPrice, formInputRoyalty, isReselling, id) => {
         try {
-            console.log(url, formInputPrice, isReselling, id);
+            console.log(url, formInputPrice, formInputRoyalty, isReselling, id);
             const price = ethers.utils.parseUnits(formInputPrice, "ether");
             const contract = await connectingWithSmartContract();
+            const royalty = await contract.setRoyaltyFee(formInputRoyalty)
             const listingPrice = await contract.getListingPrice();
             const transaction = !isReselling
-                ? await contract.createToken(url, price, {
+                ? await contract.createToken(url, price, royalty,{
                     value: listingPrice.toString(),
                 })
                 : await contract.resellToken(id, price, {

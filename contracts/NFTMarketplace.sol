@@ -14,9 +14,11 @@ contract NFTMarketplace is ERC721URIStorage, ERC2981 {
     Counters.Counter private _itemsSold;
 
     uint256 listingPrice = 0.025 ether;
+    uint256 feePercent;
     address payable owner;
 
     mapping(uint256 => MarketItem) private idToMarketItem;
+    mapping(uint => Royalty) public royalties;
 
     struct MarketItem {
         uint256 tokenId;
@@ -24,6 +26,10 @@ contract NFTMarketplace is ERC721URIStorage, ERC2981 {
         address payable owner;
         uint256 price;
         bool sold;
+    }
+
+    struct Royalty {
+        uint feePercent;
     }
 
     event MarketItemCreated(
@@ -47,11 +53,17 @@ contract NFTMarketplace is ERC721URIStorage, ERC2981 {
         _setDefaultRoyalty(msg.sender, 100);
     }
 
+    /* Override supportsInterface ERC721 and ERC2981 */
     function supportsInterface(bytes4 interfaceId)
         public view virtual override(ERC721, ERC2981)
         returns (bool) {
             return super.supportsInterface(interfaceId);
         }
+
+    /* Set Royalty Fee on feePercent */
+    function setRoyaltyFee(uint _newRoyaltyFee) public {
+        feePercent = _newRoyaltyFee;
+    }
 
     /* Updates the listing price of the contract */
     function updateListingPrice(uint256 _listingPrice)
@@ -72,7 +84,7 @@ contract NFTMarketplace is ERC721URIStorage, ERC2981 {
     }
 
     /* Mints a token and lists it in the marketplace */
-    function createToken(string memory tokenURI, uint256 price)
+    function createToken(string memory tokenURI, uint256 price, uint256 _feePercent)
         public
         payable
         returns (uint256)
@@ -82,12 +94,12 @@ contract NFTMarketplace is ERC721URIStorage, ERC2981 {
 
         _mint(msg.sender, newTokenId);
         _setTokenURI(newTokenId, tokenURI);
-        createMarketItem(newTokenId, price);
+        createMarketItem(newTokenId, price, _feePercent);
         return newTokenId;
     }
 
-    function createMarketItem(uint256 tokenId, uint256 price) private {
-        require(price > 0, "Price must be at least 1 wei");
+    function createMarketItem(uint256 tokenId, uint256 _price, uint256 _feePercent) private {
+        require(_price > 0, "Price must be at least 1 wei");
         require(
             msg.value == listingPrice,
             "Price must be equal to listing price"
@@ -97,16 +109,20 @@ contract NFTMarketplace is ERC721URIStorage, ERC2981 {
             tokenId,
             payable(msg.sender),
             payable(address(this)),
-            price,
+            _price,
             false
         );
 
         _transfer(msg.sender, address(this), tokenId);
+
+        //Add fee percent to Item
+        royalties[tokenId] = Royalty (_feePercent);
+
         emit MarketItemCreated(
             tokenId,
             msg.sender,
             address(this),
-            price,
+            _price,
             false
         );
     }
@@ -121,8 +137,9 @@ contract NFTMarketplace is ERC721URIStorage, ERC2981 {
             msg.value == listingPrice,
             "Price must be equal to listing price"
         );
+        uint256 _totalPrice = getTotalPrice(tokenId);
         idToMarketItem[tokenId].sold = false;
-        idToMarketItem[tokenId].price = price;
+        _totalPrice = price;
         idToMarketItem[tokenId].seller = payable(msg.sender);
         idToMarketItem[tokenId].owner = payable(address(this));
         _itemsSold.decrement();
@@ -133,7 +150,7 @@ contract NFTMarketplace is ERC721URIStorage, ERC2981 {
     /* Creates the sale of a marketplace item */
     /* Transfers ownership of the item, as well as funds between parties */
     function createMarketSale(uint256 tokenId) public payable {
-        uint256 price = idToMarketItem[tokenId].price;
+        uint256 price = getTotalPrice(tokenId);
         require(
             msg.value == price,
             "Please submit the asking price in order to complete the purchase"
@@ -211,5 +228,10 @@ contract NFTMarketplace is ERC721URIStorage, ERC2981 {
             }
         }
         return items;
+    }
+
+    /* Get the total price (+royalty) */
+    function getTotalPrice(uint tokenId) view public returns(uint){
+        return((idToMarketItem[tokenId].price*(100 + royalties[tokenId].feePercent))/100);
     }
 }

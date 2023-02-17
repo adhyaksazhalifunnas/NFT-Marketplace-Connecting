@@ -218,9 +218,9 @@ const UploadNFT = ({ uploadToIPFS, createNFT }) => {
                                 price,
                                 image,
                                 description,
+                                royalties,
                                 router
                                 // website,
-                                // royalties,
                                 // fileSize,
                                 // category,
                                 // properties
