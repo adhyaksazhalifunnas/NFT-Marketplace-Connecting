@@ -6,10 +6,8 @@ import axios from "axios";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 
 // const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
-// const projectId = process.env.REACT_APP_PROJECT_ID;
-// const projectSecretKey = process.env.REACT_APP_PROJECT_SECRET_KEY;
-const projectId = "insertprojectid";
-const projectSecretKey = "insertprojectsecretkey";
+const projectId = process.env.NEXT_PROJECT_ID;
+const projectSecretKey = process.env.NEXT_PROJECT_SECRET_KEY;
 const auth = 'Basic ' + Buffer.from( projectId + ":" + projectSecretKey ).toString('base64');
 
 const subdomain = "https://naname-nft-marketplace.infura-ipfs.io";
@@ -173,8 +171,9 @@ export const NFTMarketplaceProvider = ({ children }) => {
         try {
             console.log(url, formInputPrice, formInputRoyalty, isReselling, id);
             const price = ethers.utils.parseUnits(formInputPrice, "ether");
+            const royalty = ethers.utils.parseUnits(formInputRoyalty, "ether");
             const contract = await connectingWithSmartContract();
-            const royalty = await contract.setRoyaltyFee(formInputRoyalty)
+            // const royalty = await contract.setRoyaltyFee(parsedRoyalty)
             const listingPrice = await contract.getListingPrice();
             const transaction = !isReselling
                 ? await contract.createToken(url, price, royalty,{

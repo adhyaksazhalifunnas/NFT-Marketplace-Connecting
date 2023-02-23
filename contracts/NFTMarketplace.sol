@@ -18,7 +18,7 @@ contract NFTMarketplace is ERC721URIStorage, ERC2981 {
     address payable owner;
 
     mapping(uint256 => MarketItem) private idToMarketItem;
-    mapping(uint => Royalty) public royalties;
+    mapping(uint256 => Royalty) public royalties;
 
     struct MarketItem {
         uint256 tokenId;
@@ -29,7 +29,7 @@ contract NFTMarketplace is ERC721URIStorage, ERC2981 {
     }
 
     struct Royalty {
-        uint feePercent;
+        uint256 feePercent;
     }
 
     event MarketItemCreated(
@@ -61,7 +61,7 @@ contract NFTMarketplace is ERC721URIStorage, ERC2981 {
         }
 
     /* Set Royalty Fee on feePercent */
-    function setRoyaltyFee(uint _newRoyaltyFee) public {
+    function setRoyaltyFee(uint256 _newRoyaltyFee) public {
         feePercent = _newRoyaltyFee;
     }
 
@@ -137,9 +137,10 @@ contract NFTMarketplace is ERC721URIStorage, ERC2981 {
             msg.value == listingPrice,
             "Price must be equal to listing price"
         );
-        uint256 _totalPrice = getTotalPrice(tokenId);
+        // uint256 _totalPrice = getTotalPrice(tokenId);
         idToMarketItem[tokenId].sold = false;
-        _totalPrice = price;
+        // _totalPrice = price;
+        idToMarketItem[tokenId].price = price;
         idToMarketItem[tokenId].seller = payable(msg.sender);
         idToMarketItem[tokenId].owner = payable(address(this));
         _itemsSold.decrement();
@@ -150,7 +151,8 @@ contract NFTMarketplace is ERC721URIStorage, ERC2981 {
     /* Creates the sale of a marketplace item */
     /* Transfers ownership of the item, as well as funds between parties */
     function createMarketSale(uint256 tokenId) public payable {
-        uint256 price = getTotalPrice(tokenId);
+        // uint256 price = getTotalPrice(tokenId);
+        uint256 price = idToMarketItem[tokenId].price;
         require(
             msg.value == price,
             "Please submit the asking price in order to complete the purchase"
@@ -231,7 +233,7 @@ contract NFTMarketplace is ERC721URIStorage, ERC2981 {
     }
 
     /* Get the total price (+royalty) */
-    function getTotalPrice(uint tokenId) view public returns(uint){
-        return((idToMarketItem[tokenId].price*(100 + royalties[tokenId].feePercent))/100);
-    }
+    // function getTotalPrice(uint256 tokenId) view public returns(uint256){
+    //     return((idToMarketItem[tokenId].price*(100 + royalties[tokenId].feePercent))/100);
+    // }
 }
